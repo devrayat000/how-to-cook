@@ -1,15 +1,16 @@
 {
   "expo": {
-    "name": "how-to-cook",
+    "name": "How To Cook",
     "slug": "how-to-cook",
-    "version": "1.0.0",
+    "version": "0.0.1-beta",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "howtocook",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "platforms": [
-      "web"
+      "android",
+      "ios"
     ],
     "ios": {
       "supportsTablet": true
@@ -18,12 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      },
+      "package": "com.devrayat000.howtocook"
     },
     "plugins": [
       "expo-router",

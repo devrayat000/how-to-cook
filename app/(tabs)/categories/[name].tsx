@@ -1,6 +1,10 @@
 import RecipesList from "@/components/home/recipe-list";
+import ThemedText from "@/components/ui/themed-text";
+import { useTheme } from "@/hooks/useThemeColor";
 import { getCategoryByName, getMealsByCategory } from "@/lib/services/query";
+import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 import useSWR from "swr";
 
 type CategoryParams = {
@@ -35,25 +39,46 @@ export default function CategoryScreen() {
       isPaused: () => !categoryData,
     }
   );
+  const theme = useTheme();
 
   return (
-    <main className="container">
-      <section className="p-4">
-        <section>
-          <h1 className="text-3xl font-bold">{name}</h1>
-        </section>
-        <figure>
-          <img
-            src={categoryData?.category?.image}
+    <ScrollView contentContainerStyle={styles.scrollContent}>
+      <View>
+        <View>
+          <ThemedText style={[styles.title, theme.fonts.bold]}>
+            {name}
+          </ThemedText>
+        </View>
+        <View>
+          <Image
+            source={categoryData?.category?.image}
             alt={name}
-            className="w-full aspect-w-16 aspect-h-9 object-cover"
+            style={[styles.image]}
           />
-          <figcaption>{categoryData?.category?.description}</figcaption>
-        </figure>
-      </section>
-      <section>
+          <ThemedText style={[styles.description]}>
+            {categoryData?.category?.description}
+          </ThemedText>
+        </View>
+      </View>
+      <View>
         <RecipesList recipes={recipeData?.recipes} />
-      </section>
-    </main>
+      </View>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollContent: {
+    padding: 8,
+  },
+  title: {
+    fontSize: 32,
+  },
+  image: {
+    width: "100%",
+    aspectRatio: 16 / 9,
+  },
+  description: {
+    fontSize: 14,
+  },
+});

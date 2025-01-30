@@ -1,8 +1,10 @@
 import { getMealCategories } from "@/lib/services/query";
 import useSWR from "swr";
-import { Link } from "expo-router";
-import { RippleButton } from "../ui/ripple-button";
-import { Box } from "../ui/box";
+import { useRouter } from "expo-router";
+import { FlatList, StyleSheet, View, Pressable } from "react-native";
+import { Image } from "expo-image";
+import { useTheme } from "@/hooks/useThemeColor";
+import ThemedText from "../ui/themed-text";
 
 export default function RecipeCategories() {
   const { data, error } = useSWR(["/api/category"], getMealCategories, {
@@ -14,40 +16,70 @@ export default function RecipeCategories() {
     refreshWhenOffline: false,
     revalidateIfStale: false,
   });
+  const router = useRouter();
+  const theme = useTheme();
 
   return (
-    <Box className="flex flex-row flex-nowrap w-full overflow-y-hidden overflow-x-auto gap-1 py-4 px-2">
-      {data?.categories.map((category) => (
-        <RippleButton
+    <FlatList
+      horizontal
+      data={data?.categories}
+      contentContainerStyle={styles.scrollContainer}
+      renderItem={({ item: category }) => (
+        <View
           key={category.id}
-          rippleColor="#ADD8E6"
-          // asChild
-          className="shrink-0 w-24 rounded-xl border border-slate-200"
+          style={[styles.card, { backgroundColor: theme.colors.card }]}
         >
-          <Link
-            href={{
-              pathname: "/categories/[name]",
-              params: {
-                name: category.name,
-                description: category.description,
-                image: category.image,
-              },
-            }}
-            className="p-0.5 block"
+          <Pressable
+            android_ripple={{ color: theme.colors.surfaceDisabled }}
+            style={[styles.cardPressable, { borderColor: theme.colors.border }]}
+            onPress={() =>
+              router.push({
+                pathname: "/(tabs)/categories/[name]",
+                params: category,
+              })
+            }
           >
-            <img
-              src={category.image}
-              alt={category.name}
-              className="w-full aspect-video object-contain rounded-t-xl"
-            />
-            <div className="p-2">
-              <h2 className="text-sm text-center line-clamp-1">
+            <View>
+              <Image
+                source={category.image}
+                alt={category.name}
+                style={[styles.image]}
+              />
+              <ThemedText numberOfLines={1} style={[styles.label]}>
                 {category.name}
-              </h2>
-            </div>
-          </Link>
-        </RippleButton>
-      ))}
-    </Box>
+              </ThemedText>
+            </View>
+          </Pressable>
+        </View>
+      )}
+    />
   );
 }
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    gap: 8,
+    paddingVertical: 8,
+  },
+  card: {
+    width: 100,
+    backgroundColor: "white",
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  cardPressable: {
+    borderWidth: 2,
+    borderColor: "#f0f0f0",
+    borderRadius: 12,
+    padding: 8,
+  },
+  image: {
+    width: "100%",
+    aspectRatio: 16 / 9,
+  },
+  label: {
+    textAlign: "center",
+    fontSize: 16,
+    marginTop: 8,
+  },
+});

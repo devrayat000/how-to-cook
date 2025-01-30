@@ -3,16 +3,23 @@ import useSWR from "swr";
 import { Link } from "expo-router";
 import RandomRecipes from "@/components/home/random-recipes";
 import RecipeCategories from "@/components/home/recipe-categories";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function HomeScreen() {
   return (
-    <main className="container mx-auto">
-      <section>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View>
         <RecipeCategories />
-      </section>
-      <section id="random-recipes">
+      </View>
+      <View id="random-recipes">
         <RandomRecipes />
-      </section>
-    </main>
+      </View>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 8,
+  },
+});

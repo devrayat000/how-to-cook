@@ -1,13 +1,14 @@
 import { useLocalSearchParams } from "expo-router";
 import useSWR from "swr";
 import { getMealById } from "@/lib/services/query";
+import { ScrollView } from "react-native";
 
 export default function MealDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data, error } = useSWR(["/api/meal", id], getMealById);
 
   return (
-    <main className="container mx-auto">
+    <ScrollView>
       {/* This is the meal details page */}
       <div className="p-1">
         <div>
@@ -45,6 +46,6 @@ export default function MealDetailsScreen() {
           />
         </div>
       </div>
-    </main>
+    </ScrollView>
   );
 }
