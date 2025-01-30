@@ -1,3 +1,5 @@
+import "@/lib/preprocess";
+
 import "./global.css";
 import { Slot } from "expo-router";
 import { SWRConfig } from "swr";

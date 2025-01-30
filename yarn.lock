@@ -2972,7 +2972,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:^8.0.0, ajv@npm:^8.9.0":
+"ajv@npm:^8.0.0, ajv@npm:^8.11.0, ajv@npm:^8.9.0":
   version: 8.17.1
   resolution: "ajv@npm:8.17.1"
   dependencies:
@@ -4723,6 +4723,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-build-properties@npm:~0.13.2":
+  version: 0.13.2
+  resolution: "expo-build-properties@npm:0.13.2"
+  dependencies:
+    ajv: "npm:^8.11.0"
+    semver: "npm:^7.6.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/7df50514dda73dde8ca141047c850f7a1d2b42dd3d6822b5ae284c0854a592b23fece95b758b8acc40b4e5a50a7652e72f2dba0810f21284770d472d0ea692fb
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:~17.0.4, expo-constants@npm:~17.0.5":
   version: 17.0.5
   resolution: "expo-constants@npm:17.0.5"
@@ -4766,6 +4778,21 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: 10c0/31a77f7fb2f9a3db586ca34e9fb80b9b03f29ed93aa045eeba3facec31bd71537c7a10c10c90b54cadec2334aad44df4a3cc5f99af1ca33f63f349b5547fdb43
+  languageName: node
+  linkType: hard
+
+"expo-image@npm:~2.0.4":
+  version: 2.0.4
+  resolution: "expo-image@npm:2.0.4"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+    react-native-web: "*"
+  peerDependenciesMeta:
+    react-native-web:
+      optional: true
+  checksum: 10c0/e83eae57d22c96b8e3ee44f7ce9d613161d98609bfbc270406e8c3172b41950cf27c2bb799b65ebcfe4343f8579217604f909cf8a792ba32fc92022de24543c2
   languageName: node
   linkType: hard
 
@@ -5576,9 +5603,11 @@ __metadata:
     clsx: "npm:^2.1.1"
     expo: "npm:~52.0.28"
     expo-blur: "npm:~14.0.3"
+    expo-build-properties: "npm:~0.13.2"
     expo-constants: "npm:~17.0.5"
     expo-font: "npm:~13.0.3"
     expo-haptics: "npm:~14.0.1"
+    expo-image: "npm:~2.0.4"
     expo-linking: "npm:~7.0.5"
     expo-router: "npm:~4.0.17"
     expo-splash-screen: "npm:~0.29.21"
@@ -5588,6 +5617,7 @@ __metadata:
     expo-web-browser: "npm:~14.0.2"
     jest: "npm:^29.2.1"
     jest-expo: "npm:~52.0.3"
+    jotai: "npm:^2.11.1"
     lucide-react: "npm:^0.474.0"
     postcss: "npm:^8.5.1"
     react: "npm:18.3.1"
@@ -6676,6 +6706,21 @@ __metadata:
   version: 1.1.0
   resolution: "join-component@npm:1.1.0"
   checksum: 10c0/7319cb1ca6ffc514d82ac1b965c4e6cd6bf852adec1e7833bd8613e17f4965e78e2653c8de75a1fe51d9a2cae36af3298008df4079cfd903ef3ecbd231fe11c1
+  languageName: node
+  linkType: hard
+
+"jotai@npm:^2.11.1":
+  version: 2.11.1
+  resolution: "jotai@npm:2.11.1"
+  peerDependencies:
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 10c0/bdf1c66ec151290ea8008e6d302405f4d989eb00c7dd14eb77a659f4895bfc2d80f30082865b4ded4f15a0f6aea7c4e8c817b07db3d9c15fc4fea6ad2f1e34bc
   languageName: node
   linkType: hard
 

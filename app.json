@@ -8,7 +8,9 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "platforms": ["web"],
+    "platforms": [
+      "web"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -33,10 +35,17 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-build-properties"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f8a0387e-7438-4222-93f5-de8dd409430c"
+      }
+    },
+    "owner": "devrayat000"
   }
 }

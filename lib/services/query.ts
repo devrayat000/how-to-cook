@@ -1,38 +1,11 @@
-import { parseIngredients } from "../functions";
-import { Meal } from "../types/meal";
+import * as api from "./api";
 
-export async function getMealCategories() {
-  const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/categories.php`);
-  const data = await res.json();
+export const getMealCategories = api.getMealCategories;
 
-  return data;
-}
+export const getRandomMeals = api.getRandomMeals;
 
-export async function getRandomMeals([_, count]: [_: string, count: number]) {
-  const meals = new Map<string, Meal>();
-  for (let i = 0; i < count; i++) {
-    const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/random.php`);
-    const data = await res.json();
-    const meal = data.meals.at(0);
-    const parsedMeal = parseIngredients(meal);
+export const getMealById = api.getMealById;
 
-    if (meals.has(parsedMeal.id)) {
-      i--;
-      continue;
-    }
+export const getMealsByCategory = api.getMealsByCategory;
 
-    meals.set(parsedMeal.id, parsedMeal);
-  }
-
-  return Array.from(meals.values());
-}
-
-export async function getMealById([_, id]: [_: string, id: string]) {
-  const res = await fetch(
-    `${process.env.EXPO_PUBLIC_API_URL}/lookup.php?i=${id}`
-  );
-  const data = await res.json();
-  const meal = data.meals.at(0);
-
-  return parseIngredients(meal);
-}
+export const getCategoryByName = api.getCategoryByName;
