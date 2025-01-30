@@ -1,7 +1,0 @@
-{
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "default",
-  "iconLibrary": "lucid-react",
-  "tsx": true,
-  "rsc": false
-}

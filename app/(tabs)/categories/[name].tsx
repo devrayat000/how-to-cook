@@ -37,25 +37,23 @@ export default function CategoryScreen() {
   );
 
   return (
-    <div className="container">
-      <main className="h-screen overflow-y-auto">
-        <section className="p-4">
-          <section>
-            <h1 className="text-3xl font-bold">{name}</h1>
-          </section>
-          <figure>
-            <img
-              src={categoryData?.category?.image}
-              alt={name}
-              className="w-full aspect-w-16 aspect-h-9 object-cover"
-            />
-            <figcaption>{categoryData?.category?.description}</figcaption>
-          </figure>
-        </section>
+    <main className="container">
+      <section className="p-4">
         <section>
-          <RecipesList recipes={recipeData?.recipes} />
+          <h1 className="text-3xl font-bold">{name}</h1>
         </section>
-      </main>
-    </div>
+        <figure>
+          <img
+            src={categoryData?.category?.image}
+            alt={name}
+            className="w-full aspect-w-16 aspect-h-9 object-cover"
+          />
+          <figcaption>{categoryData?.category?.description}</figcaption>
+        </figure>
+      </section>
+      <section>
+        <RecipesList recipes={recipeData?.recipes} />
+      </section>
+    </main>
   );
 }

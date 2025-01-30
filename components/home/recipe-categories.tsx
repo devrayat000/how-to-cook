@@ -1,6 +1,8 @@
 import { getMealCategories } from "@/lib/services/query";
 import useSWR from "swr";
 import { Link } from "expo-router";
+import { RippleButton } from "../ui/ripple-button";
+import { Box } from "../ui/box";
 
 export default function RecipeCategories() {
   const { data, error } = useSWR(["/api/category"], getMealCategories, {
@@ -14,20 +16,25 @@ export default function RecipeCategories() {
   });
 
   return (
-    <div className="flex flex-nowrap w-full overflow-y-hidden overflow-x-auto gap-1 py-4 px-2">
+    <Box className="flex flex-row flex-nowrap w-full overflow-y-hidden overflow-x-auto gap-1 py-4 px-2">
       {data?.categories.map((category) => (
-        <Link
+        <RippleButton
           key={category.id}
-          href={{
-            pathname: "/categories/[name]",
-            params: {
-              name: category.name,
-              description: category.description,
-              image: category.image,
-            },
-          }}
+          rippleColor="#ADD8E6"
+          // asChild
+          className="shrink-0 w-24 rounded-xl border border-slate-200"
         >
-          <div className="w-24 p-0.5 rounded-xl border border-slate-200">
+          <Link
+            href={{
+              pathname: "/categories/[name]",
+              params: {
+                name: category.name,
+                description: category.description,
+                image: category.image,
+              },
+            }}
+            className="p-0.5 block"
+          >
             <img
               src={category.image}
               alt={category.name}
@@ -38,9 +45,9 @@ export default function RecipeCategories() {
                 {category.name}
               </h2>
             </div>
-          </div>
-        </Link>
+          </Link>
+        </RippleButton>
       ))}
-    </div>
+    </Box>
   );
 }

@@ -7,7 +7,7 @@ export default function MealDetailsScreen() {
   const { data, error } = useSWR(["/api/meal", id], getMealById);
 
   return (
-    <div className="container h-screen overflow-y-auto">
+    <main className="container mx-auto">
       {/* This is the meal details page */}
       <div className="p-1">
         <div>
@@ -45,6 +45,6 @@ export default function MealDetailsScreen() {
           />
         </div>
       </div>
-    </div>
+    </main>
   );
 }

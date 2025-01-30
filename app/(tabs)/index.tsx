@@ -6,15 +6,13 @@ import RecipeCategories from "@/components/home/recipe-categories";
 
 export default function HomeScreen() {
   return (
-    <div className="container">
-      <main className="h-screen overflow-y-auto">
-        <section>
-          <RecipeCategories />
-        </section>
-        <section id="random-recipes">
-          <RandomRecipes />
-        </section>
-      </main>
-    </div>
+    <main className="container mx-auto">
+      <section>
+        <RecipeCategories />
+      </section>
+      <section id="random-recipes">
+        <RandomRecipes />
+      </section>
+    </main>
   );
 }

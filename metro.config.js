@@ -1,9 +1,6 @@
-const getDefaultConfig = require("expo/metro-config").getDefaultConfig;
+const { getDefaultConfig } = require("expo/metro-config");
+const { withNativeWind } = require("nativewind/metro");
 
-/** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(__dirname, {
-  // Do not disable CSS support when using Tailwind.
-  isCSSEnabled: true,
-});
+const config = getDefaultConfig(__dirname, { isCSSEnabled: true });
 
-module.exports = config;
+module.exports = withNativeWind(config, { input: "./global.css" });
