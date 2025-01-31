@@ -39,7 +39,6 @@ const fonts = {
 } satisfies Theme["fonts"];
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded, error] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
@@ -47,26 +46,17 @@ export default function RootLayout() {
     Poppins_900Black,
   });
 
-  const paperTheme = useMemo(
-    () =>
-      colorScheme === "dark"
-        ? {
-            ...NavigationDarkTheme,
-            fonts,
-          }
-        : {
-            ...NavigationDefaultTheme,
-            fonts,
-          },
-    [colorScheme]
-  );
-
   if (!loaded || error) {
     return null;
   }
 
   return (
-    <ThemeProvider value={paperTheme}>
+    <ThemeProvider
+      value={{
+        ...NavigationDefaultTheme,
+        fonts,
+      }}
+    >
       <SWRConfig value={{ suspense: true }}>
         <Slot />
       </SWRConfig>
