@@ -18,6 +18,7 @@ import {
 } from "@react-navigation/native";
 import { useColorScheme } from "react-native-web";
 import { useMemo } from "react";
+import SWRCache from "@/lib/cache";
 
 const fonts = {
   regular: {
@@ -57,7 +58,12 @@ export default function RootLayout() {
         fonts,
       }}
     >
-      <SWRConfig value={{ suspense: true }}>
+      <SWRConfig
+        value={{
+          suspense: true,
+          provider: () => new SWRCache("@swr-webcache/htc"),
+        }}
+      >
         <Slot />
       </SWRConfig>
     </ThemeProvider>
