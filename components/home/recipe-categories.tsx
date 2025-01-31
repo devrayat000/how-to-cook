@@ -20,7 +20,7 @@ export default function RecipeCategories() {
     <FlatList
       horizontal
       data={data?.categories}
-      keyExtractor={(category) => category.id + Math.random()}
+      keyExtractor={(category) => category.id}
       contentContainerClassName="gap-2 py-2"
       renderItem={({ item: category }) => (
         <ThemedLink
