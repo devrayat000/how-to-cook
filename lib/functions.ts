@@ -78,3 +78,8 @@ export function mapKeys<
     ])
   ) as any;
 }
+
+export function formatYoutubeUrl(url: string) {
+  const videoId = url.split("v=").pop();
+  return `https://www.youtube.com/embed/${videoId}`;
+}

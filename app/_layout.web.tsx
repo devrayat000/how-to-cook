@@ -1,8 +1,7 @@
-import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
-import { useEffect, useMemo } from "react";
-import { useColorScheme } from "react-native";
-import { Slot } from "expo-router";
+// Import your global CSS file
 import { SWRConfig } from "swr";
+import "../global.css";
+
 import {
   Poppins_400Regular,
   Poppins_500Medium,
@@ -10,15 +9,15 @@ import {
   Poppins_900Black,
   useFonts,
 } from "@expo-google-fonts/poppins";
-import * as SplashScreen from "expo-splash-screen";
+import { Slot } from "expo-router";
 import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
   Theme,
   ThemeProvider,
 } from "@react-navigation/native";
-
-SplashScreen.preventAutoHideAsync();
+import { useColorScheme } from "react-native-web";
+import { useMemo } from "react";
 
 const fonts = {
   regular: {
@@ -31,7 +30,7 @@ const fonts = {
   },
   bold: {
     fontFamily: "Poppins_700Bold",
-    fontWeight: "400",
+    fontWeight: "700",
   },
   heavy: {
     fontFamily: "Poppins_900Black",
@@ -41,8 +40,6 @@ const fonts = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const { theme } = useMaterial3Theme();
-
   const [loaded, error] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
@@ -55,22 +52,14 @@ export default function RootLayout() {
       colorScheme === "dark"
         ? {
             ...NavigationDarkTheme,
-            colors: { ...NavigationDarkTheme.colors, ...theme.dark },
             fonts,
           }
         : {
             ...NavigationDefaultTheme,
-            colors: { ...NavigationDefaultTheme.colors, ...theme.light },
             fonts,
           },
-    [colorScheme, theme]
+    [colorScheme]
   );
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
 
   if (!loaded || error) {
     return null;

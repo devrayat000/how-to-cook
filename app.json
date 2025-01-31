@@ -8,10 +8,7 @@
     "scheme": "howtocook",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "platforms": [
-      "android",
-      "ios"
-    ],
+    "platforms": ["android", "ios", "web"],
     "ios": {
       "supportsTablet": true
     },
@@ -21,6 +18,15 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.devrayat000.howtocook"
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png",
+      "lang": "en",
+      "name": "How To Cook",
+      "shortName": "How To Cook",
+      "themeColor": "#ffffff",
+      "output": "static",
+      "bundler": "metro"
     },
     "plugins": [
       "expo-router",

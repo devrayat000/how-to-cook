@@ -1,10 +1,12 @@
 import RecipesList from "@/components/home/recipe-list";
-import ThemedText from "@/components/ui/themed-text";
+import { ThemedH1, ThemedP } from "@/components/ui/themed-text";
 import { useTheme } from "@/hooks/useThemeColor";
 import { getCategoryByName, getMealsByCategory } from "@/lib/services/query";
+import { Main, Section } from "@expo/html-elements";
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import Head from "expo-router/head";
+import { ScrollView, StyleSheet } from "react-native";
 import useSWR from "swr";
 
 type CategoryParams = {
@@ -42,27 +44,40 @@ export default function CategoryScreen() {
   const theme = useTheme();
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContent}>
-      <View>
-        <View>
-          <ThemedText style={[styles.title, theme.fonts.bold]}>
+    <ScrollView contentContainerClassName="p-2">
+      <Head>
+        <title>{name} - Category</title>
+        <meta
+          name="description"
+          content={categoryData?.category?.description}
+        />
+        <meta property="og:title" content={`${name} - How To Cook`} />
+        <meta
+          property="og:description"
+          content={categoryData?.category?.description}
+        />
+        <meta property="og:image" content={categoryData?.category?.image} />
+      </Head>
+      <Main>
+        <Section>
+          <ThemedH1 className="text-3xl" style={theme.fonts.bold}>
             {name}
-          </ThemedText>
-        </View>
-        <View>
+          </ThemedH1>
+        </Section>
+        <Section>
           <Image
             source={categoryData?.category?.image}
             alt={name}
-            style={[styles.image]}
+            className="web:block w-full aspect-video object-cover rounded-md"
           />
-          <ThemedText style={[styles.description]}>
+          <ThemedP className="text-base">
             {categoryData?.category?.description}
-          </ThemedText>
-        </View>
-      </View>
-      <View>
+          </ThemedP>
+        </Section>
+      </Main>
+      <Section>
         <RecipesList recipes={recipeData?.recipes} />
-      </View>
+      </Section>
     </ScrollView>
   );
 }

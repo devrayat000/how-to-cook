@@ -3,7 +3,10 @@ import { Meal } from "@/lib/types/meal";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
-import ThemedText from "../ui/themed-text";
+import ThemedText, { ThemedH4, ThemedP } from "../ui/themed-text";
+import { Article, Div, Section } from "@expo/html-elements";
+import ThemedButton from "../ui/button";
+import ThemedLink from "../ui/link";
 
 type RecipeCardInfo = Pick<Meal, "id" | "name" | "image" | "category" | "area">;
 
@@ -16,99 +19,54 @@ export default function RecipesList({ recipes }: RecipesListProps) {
   const theme = useTheme();
 
   return (
-    <View style={styles.container}>
+    <Section className="gap-2">
       {recipes?.map((recipe) => (
-        <View
+        <ThemedLink
           key={recipe.id}
-          style={[styles.card, { backgroundColor: theme.colors.card }]}
+          className="web:block rounded-xl overflow-hidden border border-slate-200 bg-white"
+          // onPress={() =>
+          //   router.push({
+          //     pathname: "/recipes/[id]",
+          //     params: { id: recipe.id },
+          //   })
+          // }
+          href={{
+            pathname: "/recipes/[id]",
+            params: { id: recipe.id },
+          }}
         >
-          <Pressable
-            android_ripple={{ color: theme.colors.surfaceDisabled }}
-            style={[styles.cardPressable, { borderColor: theme.colors.border }]}
-            onPress={() =>
-              router.push({
-                pathname: "/recipes/[id]",
-                params: { id: recipe.id },
-              })
-            }
-          >
-            <View>
-              <Image
-                source={recipe.image}
-                alt={recipe.name}
-                style={[styles.image]}
-              />
-              <View style={[styles.captionContainer]}>
-                <ThemedText
-                  numberOfLines={1}
-                  style={[
-                    styles.label,
-                    theme.fonts.bold,
-                    { color: theme.colors.text },
-                  ]}
+          <Image
+            source={recipe.image}
+            alt={recipe.name}
+            className="web:block w-full aspect-video rounded-xl"
+          />
+          <Div className="web:block p-2">
+            <ThemedH4
+              numberOfLines={1}
+              className="text-2xl text-slate-900"
+              style={theme.fonts.bold}
+            >
+              {recipe.name}
+            </ThemedH4>
+            {(!!recipe.category || !!recipe.area) && (
+              <Section className="flex web:flex-row justify-between">
+                <ThemedP
+                  className="text-base"
+                  style={[{ color: theme.colors.onSurfaceVariant }]}
                 >
-                  {recipe.name}
-                </ThemedText>
-                {(!!recipe.category || !!recipe.area) && (
-                  <View style={[styles.featureContainer]}>
-                    <ThemedText
-                      style={[
-                        styles.featureText,
-                        { color: theme.colors.onSurfaceVariant },
-                      ]}
-                    >
-                      {recipe.category}
-                    </ThemedText>
-                    <ThemedText
-                      style={[
-                        styles.featureText,
-                        { color: theme.colors.onSurfaceVariant },
-                      ]}
-                    >
-                      {recipe.area}
-                    </ThemedText>
-                  </View>
-                )}
-              </View>
-            </View>
-          </Pressable>
-        </View>
+                  {recipe.category}
+                </ThemedP>
+                <ThemedP
+                  className="text-base"
+                  style={[{ color: theme.colors.onSurfaceVariant }]}
+                >
+                  {recipe.area}
+                </ThemedP>
+              </Section>
+            )}
+          </Div>
+        </ThemedLink>
       ))}
-    </View>
+    </Section>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    gap: 8,
-  },
-  card: {
-    backgroundColor: "white",
-    borderRadius: 12,
-    overflow: "hidden",
-  },
-  cardPressable: {
-    borderWidth: 2,
-    borderColor: "#f0f0f0",
-    borderRadius: 12,
-    padding: 1,
-  },
-  image: {
-    width: "100%",
-    aspectRatio: 16 / 9,
-    borderRadius: 12,
-  },
-  captionContainer: {
-    padding: 8,
-  },
-  label: {
-    fontSize: 22,
-  },
-  featureContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  featureText: {
-    fontSize: 16,
-  },
-});

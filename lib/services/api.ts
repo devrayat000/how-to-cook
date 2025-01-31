@@ -79,5 +79,5 @@ export async function getMealById([_, id]: [_: string, id: string]) {
   const data = await res.json();
   const meal = data.meals.at(0);
 
-  return parseIngredients(meal);
+  return { recipe: parseIngredients(meal) };
 }
