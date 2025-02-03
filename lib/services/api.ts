@@ -1,4 +1,5 @@
 import { mapKeys, parseIngredients } from "../functions";
+import { IArea } from "../types/area";
 import { ICategory } from "../types/category";
 import { Meal } from "../types/meal";
 import { preload } from "swr";
@@ -77,4 +78,13 @@ export async function getMealById([_, id]: [_: string, id: string]) {
   const meal = data.meals.at(0);
 
   return { recipe: parseIngredients(meal) };
+}
+
+export async function getMealAreas() {
+  const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/list.php?a=list`);
+  const data = (await res.json()) as { meals: IArea[] };
+
+  return {
+    areas: data.meals.map((area) => mapKeys(area, { strArea: "area" })),
+  };
 }

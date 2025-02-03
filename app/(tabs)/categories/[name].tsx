@@ -71,7 +71,7 @@ export default function CategoryScreen() {
           </ThemedP>
         </Section>
       </Main>
-      <Section>
+      <Section className="mt-4">
         <Suspense fallback={<ActivityIndicator />}>
           <RecipesUnderCategory name={categoryData?.category?.name} />
         </Suspense>
