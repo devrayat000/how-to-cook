@@ -23,7 +23,7 @@ function platformAwareText<Props extends TextProps>(
       return (
         <Component
           {...props}
-          className={cn("web:block web:my-0", props.className)}
+          className={cn("web:block my-0", props.className)}
           style={[theme.fonts.regular, props.style]}
         />
       );
