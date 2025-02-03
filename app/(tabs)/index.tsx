@@ -1,11 +1,8 @@
-import { getRandomMeals } from "@/lib/services/query";
-import useSWR from "swr";
-import { Link } from "expo-router";
 import RandomRecipes from "@/components/home/random-recipes";
 import RecipeCategories from "@/components/home/recipe-categories";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Section } from "@expo/html-elements";
-import Head from "expo-router/head";
+import Head from "@/components/ui/head";
 
 export default function HomeScreen() {
   return (

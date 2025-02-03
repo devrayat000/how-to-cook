@@ -7,6 +7,7 @@ import ThemedText, { ThemedH4, ThemedP } from "../ui/themed-text";
 import { Article, Div, Section } from "@expo/html-elements";
 import ThemedButton from "../ui/button";
 import ThemedLink from "../ui/link";
+import { AnimatedImage } from "../ui/animated";
 
 type RecipeCardInfo = Pick<Meal, "id" | "name" | "image" | "category" | "area">;
 
@@ -24,21 +25,16 @@ export default function RecipesList({ recipes }: RecipesListProps) {
         <ThemedLink
           key={recipe.id}
           className="web:block rounded-xl overflow-hidden border border-slate-200 bg-white"
-          // onPress={() =>
-          //   router.push({
-          //     pathname: "/recipes/[id]",
-          //     params: { id: recipe.id },
-          //   })
-          // }
           href={{
-            pathname: "/recipes/[id]",
+            pathname: "/(tabs)/recipes/[id]/ingredients",
             params: { id: recipe.id },
           }}
         >
-          <Image
+          <AnimatedImage
             source={recipe.image}
             alt={recipe.name}
             className="web:block w-full aspect-video rounded-xl"
+            sharedTransitionTag={`recipe-image:${recipe.image}`}
           />
           <Div className="web:block p-2">
             <ThemedH4

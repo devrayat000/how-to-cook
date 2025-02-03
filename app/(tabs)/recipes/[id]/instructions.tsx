@@ -1,9 +1,7 @@
-import { View, Text } from "react-native";
-import React from "react";
 import { ThemedP } from "@/components/ui/themed-text";
 import useSWR from "swr";
 import { getMealById } from "@/lib/services/query";
-import { useGlobalSearchParams, useLocalSearchParams } from "expo-router";
+import { useGlobalSearchParams } from "expo-router";
 
 export default function instructions() {
   const { id } = useGlobalSearchParams<{ id: string }>();

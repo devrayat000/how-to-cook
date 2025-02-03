@@ -1,12 +1,13 @@
 import RecipesList from "@/components/home/recipe-list";
+import { AnimatedImage } from "@/components/ui/animated";
+import Head from "@/components/ui/head";
 import { ThemedH1, ThemedP } from "@/components/ui/themed-text";
 import { useTheme } from "@/hooks/useThemeColor";
 import { getCategoryByName, getMealsByCategory } from "@/lib/services/query";
 import { Main, Section } from "@expo/html-elements";
-import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
-import Head from "expo-router/head";
-import { ScrollView, StyleSheet } from "react-native";
+import { Suspense } from "react";
+import { ActivityIndicator, ScrollView } from "react-native";
 import useSWR from "swr";
 
 type CategoryParams = {
@@ -34,13 +35,7 @@ export default function CategoryScreen() {
             },
     }
   );
-  const { data: recipeData } = useSWR(
-    ["/api/category", name],
-    getMealsByCategory,
-    {
-      isPaused: () => !categoryData,
-    }
-  );
+
   const theme = useTheme();
 
   return (
@@ -65,10 +60,11 @@ export default function CategoryScreen() {
           </ThemedH1>
         </Section>
         <Section>
-          <Image
+          <AnimatedImage
             source={categoryData?.category?.image}
             alt={name}
             className="web:block w-full aspect-video object-cover rounded-md"
+            sharedTransitionTag={`category-image:${categoryData?.category?.image}`}
           />
           <ThemedP className="text-base">
             {categoryData?.category?.description}
@@ -76,24 +72,22 @@ export default function CategoryScreen() {
         </Section>
       </Main>
       <Section>
-        <RecipesList recipes={recipeData?.recipes} />
+        <Suspense fallback={<ActivityIndicator />}>
+          <RecipesUnderCategory name={categoryData?.category?.name} />
+        </Suspense>
       </Section>
     </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  scrollContent: {
-    padding: 8,
-  },
-  title: {
-    fontSize: 32,
-  },
-  image: {
-    width: "100%",
-    aspectRatio: 16 / 9,
-  },
-  description: {
-    fontSize: 14,
-  },
-});
+function RecipesUnderCategory({ name }: { name?: string }) {
+  const { data: recipeData } = useSWR(
+    ["/api/category/meals", name],
+    getMealsByCategory,
+    {
+      isPaused: () => !name,
+    }
+  );
+
+  return <RecipesList recipes={recipeData?.recipes} />;
+}

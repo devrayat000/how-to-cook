@@ -1,9 +1,12 @@
 import { mapKeys, parseIngredients } from "../functions";
 import { ICategory } from "../types/category";
 import { Meal } from "../types/meal";
+import { preload } from "swr";
 
 export async function getMealCategories() {
-  const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/categories.php`);
+  const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/categories.php`, {
+    cache: "force-cache",
+  });
   const data = (await res.json()) as { categories: ICategory[] };
 
   const newData = {
@@ -20,11 +23,10 @@ export async function getMealCategories() {
 }
 
 export async function getCategoryByName([_, name]: [_: string, name: string]) {
-  const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/categories.php`);
-  const data = (await res.json()) as { categories: ICategory[] };
+  const { categories } = await preload(["/api/category"], getMealCategories);
 
   const categoryMap = new Map(
-    data.categories.map((category) => [category.strCategory, category])
+    categories.map((category) => [category.name, category])
   );
 
   const category = categoryMap.get(name);
@@ -34,12 +36,7 @@ export async function getCategoryByName([_, name]: [_: string, name: string]) {
   }
 
   return {
-    category: mapKeys(category, {
-      strCategory: "name",
-      idCategory: "id",
-      strCategoryThumb: "image",
-      strCategoryDescription: "description",
-    }),
+    category,
   };
 }
 

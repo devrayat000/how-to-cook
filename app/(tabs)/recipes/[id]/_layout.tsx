@@ -3,16 +3,14 @@ import { useLocalSearchParams } from "expo-router";
 import useSWR from "swr";
 import { getMealById } from "@/lib/services/query";
 import { ScrollView } from "react-native";
-import { Div, LI, Section, UL } from "@expo/html-elements";
-import { ThemedH2, ThemedH6, ThemedP } from "@/components/ui/themed-text";
-import { Image } from "expo-image";
+import { Div } from "@expo/html-elements";
+import { ThemedH2 } from "@/components/ui/themed-text";
 import { useTheme } from "@/hooks/useThemeColor";
-import YoutubePlayer from "@/components/ui/youtube-player";
-import Head from "expo-router/head";
-import { formatYoutubeUrl } from "@/lib/functions";
-import CustomTabBar from "@/components/ui/tab-bar";
 import colors from "tailwindcss/colors";
 import {} from "nativewind/theme";
+import { AnimatedImage, Universal } from "@/components/ui/animated";
+import { SlideInDown, SlideOutDown } from "react-native-reanimated";
+import Head from "@/components/ui/head";
 
 export default function RecipeDetailLayout() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -20,7 +18,7 @@ export default function RecipeDetailLayout() {
   const theme = useTheme();
 
   return (
-    <Div className="flex-1 bg-orange-50">
+    <Div className="flex-1 bg-orange-50 relative">
       <Head>
         <title>{data?.recipe.name} - Recipe</title>
         <meta name="description" content={data?.recipe?.instructions} />
@@ -30,10 +28,11 @@ export default function RecipeDetailLayout() {
       </Head>
 
       <Div>
-        <Image
+        <AnimatedImage
           source={data?.recipe.image}
           alt={data?.recipe.name}
           className="web:block w-full aspect-video object-cover"
+          sharedTransitionTag={`recipe-image:${data?.recipe.image}`}
         />
         <Div>
           <ThemedH2
@@ -44,8 +43,25 @@ export default function RecipeDetailLayout() {
           </ThemedH2>
         </Div>
       </Div>
-      <Div className="flex-1 p-2 bg-white rounded-t-xl overflow-hidden">
-        <Div className="flex-1">
+      <Universal.Div
+        entering={SlideInDown.springify()
+          .delay(100)
+          .damping(30)
+          .mass(5)
+          .stiffness(10)
+          .overshootClamping(2)
+          .restDisplacementThreshold(1)
+          .restSpeedThreshold(5)}
+        exiting={SlideOutDown.springify()
+          .damping(30)
+          .mass(5)
+          .stiffness(10)
+          .overshootClamping(2)
+          .restDisplacementThreshold(1)
+          .restSpeedThreshold(5)}
+        className="p-2 flex-1 bg-white rounded-t-xl overflow-hidden"
+      >
+        <Div className="flex-1 mt-1">
           <TopTabs
             initialRouteName="ingredients"
             screenLayout={(props) => (
@@ -75,12 +91,12 @@ export default function RecipeDetailLayout() {
               // tabBarActiveTintColor: twTheme.theme.colors.orange[800],
             }}
           >
-            <TopTabs.Screen name="details" redirect />
+            <TopTabs.Screen name="details" />
             <TopTabs.Screen name="ingredients" />
             <TopTabs.Screen name="instructions" />
           </TopTabs>
         </Div>
-      </Div>
+      </Universal.Div>
     </Div>
   );
 }
