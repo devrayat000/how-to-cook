@@ -24,7 +24,7 @@ export default function RecipeAreas() {
         <ThemedLink
           href={{
             pathname: "/(tabs)/areas/[name]",
-            params: area,
+            params: { name: area },
           }}
           className="web:block py-2 px-3 rounded-xl overflow-hidden border border-slate-200 bg-white justify-center items-center"
         >
