@@ -20,7 +20,7 @@ export default function HomeScreen() {
           content="How To Cook - Your One Stop For Cooking Recipes"
         />
       </Head>
-      <Section className="mt-4">
+      <Section className="mt-4 mb-1.5">
         <Link href={{ pathname: "/(tabs)/search" }} asChild>
           <Pressable className="flex-row items-center justify-between gap-2 android:rounded-full ios:rounded-lg bg-slate-100 p-2">
             <AntDesign name="search1" className="!text-lg text-slate-600" />

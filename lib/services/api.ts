@@ -88,3 +88,13 @@ export async function getMealAreas() {
     areas: data.meals.map((area) => mapKeys(area, { strArea: "area" })),
   };
 }
+
+export async function getMealsByArea([_, name]: [_: string, name: string]) {
+  const res = await fetch(
+    `${process.env.EXPO_PUBLIC_API_URL}/filter.php?a=${name}`
+  );
+  const data = await res.json();
+  const meals = data.meals.map(parseIngredients);
+
+  return { recipes: meals as Meal[] };
+}
