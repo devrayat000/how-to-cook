@@ -13,3 +13,5 @@ export const getCategoryByName = api.getCategoryByName;
 export const getMealAreas = api.getMealAreas;
 
 export const getMealsByArea = api.getMealsByArea;
+
+export const searchMeals = api.searchMeals;

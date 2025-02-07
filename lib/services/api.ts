@@ -98,3 +98,13 @@ export async function getMealsByArea([_, name]: [_: string, name: string]) {
 
   return { recipes: meals as Meal[] };
 }
+
+export async function searchMeals([_, query]: [_: string, query: string]) {
+  const res = await fetch(
+    `${process.env.EXPO_PUBLIC_API_URL}/search.php?s=${query}`
+  );
+  const data = await res.json();
+  const meals = data.meals.map(parseIngredients);
+
+  return { recipes: meals as Meal[] };
+}

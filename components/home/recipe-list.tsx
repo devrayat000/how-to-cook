@@ -5,26 +5,36 @@ import { ThemedH4, ThemedP } from "../ui/themed-text";
 import { Div, Section } from "@expo/html-elements";
 import ThemedLink from "../ui/link";
 import { AnimatedImage } from "../ui/animated";
+import { cn } from "@/lib/utils";
 
 type RecipeCardInfo = Pick<Meal, "id" | "name" | "image" | "category" | "area">;
 
 type RecipesListProps = {
   recipes?: RecipeCardInfo[];
+  horizontal?: boolean;
 };
 
-export default function RecipesList({ recipes }: RecipesListProps) {
+export default function RecipesList({
+  recipes,
+  horizontal = true,
+}: RecipesListProps) {
   const theme = useTheme();
 
   return (
     <FlatList
       data={recipes}
       contentContainerClassName="gap-2 py-1"
-      horizontal
+      horizontal={horizontal}
       renderItem={({ item: recipe }) => {
         return (
           <ThemedLink
             key={recipe.id}
-            className="web:block w-[90vw] rounded-xl overflow-hidden border border-slate-200 bg-white"
+            className={cn(
+              "web:block rounded-xl overflow-hidden border border-slate-200 bg-white",
+              {
+                "w-[90vw]": horizontal,
+              }
+            )}
             href={{
               pathname: "/(tabs)/recipes/[id]/ingredients",
               params: { id: recipe.id },
