@@ -1,3 +1,5 @@
+import "../global.css";
+
 import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 import { useEffect, useMemo } from "react";
 import { useColorScheme } from "react-native";

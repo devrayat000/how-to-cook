@@ -1,4 +1,4 @@
-import { View, Pressable, PressableProps } from "react-native";
+import { View, Pressable, PressableProps, StyleSheet } from "react-native";
 import { Children, Fragment } from "react";
 import { Link, LinkProps } from "expo-router";
 import { useTheme } from "@/hooks/useThemeColor";
@@ -9,7 +9,7 @@ export default function ThemedLink({ children, ...props }: LinkProps) {
   const Wrapper = isChildrenArray ? View : Fragment;
 
   return (
-    <View>
+    <View className="rounded-xl overflow-hidden">
       <Link {...props} asChild>
         <Pressable android_ripple={{ color: theme.colors.surfaceDisabled }}>
           <Wrapper>{children}</Wrapper>

@@ -14,7 +14,8 @@
       "web"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.devrayat000.howtocook"
     },
     "android": {
       "adaptiveIcon": {
